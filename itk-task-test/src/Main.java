@@ -1,18 +1,20 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Main {
     public static void main(String[] args) {
-        LocalDateTime currentTime = LocalDateTime.now();
+        Integer[] numbers = {1, 2, 1, 3, 4, 4};
 
-        getDataTime(currentTime);
+        Map<Integer, Integer> result = getCountMap(numbers);
+
+        System.out.println(result);
     }
 
-    public static void getDataTime(LocalDateTime inputDataTime) {
-        LocalDate toLocalDate = inputDataTime.toLocalDate();
-        LocalTime toLocalTime = inputDataTime.toLocalTime();
-        String resultLocalDateTime = toLocalDate + "##" + toLocalTime;
-        System.out.println(resultLocalDateTime);
+    public static <T> Map<T, Integer> getCountMap(T[] array) {
+        Map<T, Integer> countMap = new HashMap<>();
+        for (T num : array) {
+            countMap.put(num, countMap.getOrDefault(num, 0) + 1);
+        }
+        return countMap;
     }
 }
