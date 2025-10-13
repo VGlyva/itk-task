@@ -1,18 +1,10 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.Arrays;
 
 public class Main {
     public static void main(String[] args) {
-        LocalDateTime currentTime = LocalDateTime.now();
-
-        getDataTime(currentTime);
-    }
-
-    public static void getDataTime(LocalDateTime inputDataTime) {
-        LocalDate toLocalDate = inputDataTime.toLocalDate();
-        LocalTime toLocalTime = inputDataTime.toLocalTime();
-        String resultLocalDateTime = toLocalDate + "##" + toLocalTime;
-        System.out.println(resultLocalDateTime);
+        String[] data = {"ABC", "DEF"};
+        FilterIml filter = new FilterIml();
+        String[] res = Utils.filter(data, filter);
+        System.out.println(Arrays.toString(res));
     }
 }
