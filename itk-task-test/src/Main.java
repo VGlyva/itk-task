@@ -1,18 +1,38 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
-
 public class Main {
     public static void main(String[] args) {
-        LocalDateTime currentTime = LocalDateTime.now();
+        BlockingQueue<Integer> queue = new BlockingQueue<>(5);
+        Thread producer = new Thread(() -> {
+            try {
+                for (int i = 0; i <= 5; i++) {
+                    queue.enqueue(i);
+                    System.out.println("Producer: " + i);
+                    Thread.sleep(100);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
 
-        getDataTime(currentTime);
-    }
+        Thread consumer = new Thread(() -> {
+            try {
+                for (int i = 0; i <= 5; i++) {
+                    int item = queue.dequeue();
+                    System.out.println("Consumed: " + item);
+                    Thread.sleep(150);
+                }
+            } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
+            }
+        });
 
-    public static void getDataTime(LocalDateTime inputDataTime) {
-        LocalDate toLocalDate = inputDataTime.toLocalDate();
-        LocalTime toLocalTime = inputDataTime.toLocalTime();
-        String resultLocalDateTime = toLocalDate + "##" + toLocalTime;
-        System.out.println(resultLocalDateTime);
+        producer.start();
+        consumer.start();
+
+        try {
+            producer.join();
+            consumer.join();
+        } catch (InterruptedException e) {
+            Thread.currentThread().interrupt();
+        }
     }
 }
