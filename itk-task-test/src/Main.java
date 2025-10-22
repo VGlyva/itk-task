@@ -1,18 +1,13 @@
-import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.time.LocalTime;
+import java.util.concurrent.ForkJoinPool;
 
 public class Main {
     public static void main(String[] args) {
-        LocalDateTime currentTime = LocalDateTime.now();
+        int n = 10;
 
-        getDataTime(currentTime);
-    }
+        ForkJoinPool pool = new ForkJoinPool();
+        FactorialTask task = new FactorialTask(n);
 
-    public static void getDataTime(LocalDateTime inputDataTime) {
-        LocalDate toLocalDate = inputDataTime.toLocalDate();
-        LocalTime toLocalTime = inputDataTime.toLocalTime();
-        String resultLocalDateTime = toLocalDate + "##" + toLocalTime;
-        System.out.println(resultLocalDateTime);
+        long factorial = pool.invoke(task);
+        System.out.println("Факториал " + n + "! = " + factorial);
     }
 }
